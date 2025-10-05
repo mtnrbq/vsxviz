@@ -43,3 +43,16 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+# VSXViz specific
+/Data/
+*.csv
+local_data/
+
+# Test coverage
+/coverage/
+lcov.info
+
+# OS specific
+Thumbs.db
+*.tmp
