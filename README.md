@@ -63,7 +63,7 @@ test/
 ### Clone and Build
 ```bash
 # Clone the repository
-git clone https://github.com/YOUR_USERNAME/vsxviz.git
+git clone https://github.com/mtnrbq/vsxviz.git
 cd vsxviz
 
 # Get dependencies
@@ -209,12 +209,12 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## Related Projects
 
-- **[VSXList](https://github.com/rmaws/vsxlist)** - .NET CLI tool for extracting VS Code extension data
+- **[VSXList](https://github.com/mtnrbq/vsxlist)** - .NET CLI tool for extracting VS Code extension data
 
 ## Support
 
 If you encounter any issues or have questions:
-1. Check the [Issues](https://github.com/YOUR_USERNAME/vsxviz/issues) page
+1. Check the [Issues](https://github.com/mtnrbq/vsxviz/issues) page
 2. Create a new issue with detailed information
 3. Include Flutter version, OS, and steps to reproduce
 
