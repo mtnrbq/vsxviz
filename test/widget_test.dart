@@ -11,20 +11,22 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:vsxviz/main.dart';
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
+  testWidgets('VSXViz app smoke test', (WidgetTester tester) async {
     // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
+    await tester.pumpWidget(const VSXVizApp());
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+    // Verify that our app loads with the expected UI elements.
+    expect(find.text('VSXViz'), findsOneWidget);
+    expect(find.text('Dashboard'), findsWidgets); // Multiple instances expected (nav + appbar)
+    expect(find.text('Profiles'), findsOneWidget);
+    expect(find.text('Extensions'), findsOneWidget);
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
+    // Verify that the Dashboard screen is shown by default
+    expect(find.text('VS Code Extension Overview'), findsOneWidget);
+    
+    // Test navigation to Profiles screen
+    await tester.tap(find.text('Profiles'));
     await tester.pump();
-
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+    expect(find.text('VS Code Profiles'), findsOneWidget);
   });
 }
