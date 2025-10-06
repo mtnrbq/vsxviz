@@ -1,6 +1,6 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
 import '../models/models.dart';
+import 'extension_icon.dart';
 
 /// A card widget that displays extension information with icon, name, and publisher
 class ExtensionCard extends StatelessWidget {
@@ -26,14 +26,10 @@ class ExtensionCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               // Extension Icon
-              Container(
-                width: 48,
-                height: 48,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(8),
-                  color: Colors.grey[200],
-                ),
-                child: _buildExtensionIcon(),
+              ExtensionIcon(
+                extension: extension,
+                size: 48,
+                borderRadius: 8,
               ),
               const SizedBox(height: 8),
               // Extension Name
@@ -66,35 +62,5 @@ class ExtensionCard extends StatelessWidget {
     );
   }
 
-  Widget _buildExtensionIcon() {
-    if (extension.iconPath != null && extension.iconPath!.isNotEmpty) {
-      final iconFile = File(extension.iconPath!);
-      return ClipRRect(
-        borderRadius: BorderRadius.circular(8),
-        child: Image.file(
-          iconFile,
-          fit: BoxFit.cover,
-          errorBuilder: (context, error, stackTrace) {
-            return _buildFallbackIcon();
-          },
-        ),
-      );
-    }
-    
-    return _buildFallbackIcon();
-  }
 
-  Widget _buildFallbackIcon() {
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(8),
-        color: const Color(0xFF007ACC),
-      ),
-      child: const Icon(
-        Icons.extension,
-        color: Colors.white,
-        size: 24,
-      ),
-    );
-  }
 }
