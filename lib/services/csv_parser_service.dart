@@ -131,9 +131,61 @@ class CsvParserService {
         }
       }
 
+      // Improve display name if it looks like an extension ID
+      final displayName = map['displayName'] as String?;
+      final extensionId = map['id'] as String?;
+      
+      if (displayName != null && extensionId != null) {
+        map['displayName'] = _improveDisplayName(displayName, extensionId);
+      }
+
       return VsCodeExtension.fromMap(map);
     } catch (e) {
       return null;
     }
+  }
+
+  /// Improves display name by creating a readable name from extension ID if needed
+  static String _improveDisplayName(String displayName, String extensionId) {
+    // Handle placeholder variables that weren't resolved
+    if (displayName == '%displayName%' || displayName.contains('%')) {
+      return _createDisplayNameFromId(extensionId);
+    }
+    
+    // If display name looks like an extension ID (contains dots and matches the ID),
+    // try to create a better display name
+    if (displayName == extensionId || displayName.contains('.')) {
+      return _createDisplayNameFromId(extensionId);
+    }
+    
+    return displayName;
+  }
+
+  /// Creates a readable display name from an extension ID
+  static String _createDisplayNameFromId(String extensionId) {
+    // Extract the extension name part (after the last dot)
+    final parts = extensionId.split('.');
+    if (parts.length >= 2) {
+      final extensionName = parts.last;
+      // Convert kebab-case and snake_case to Title Case
+      return extensionName
+          .replaceAllMapped(RegExp(r'[-_]([a-z])'), (match) => ' ${match.group(1)!.toUpperCase()}')
+          .replaceAll(RegExp(r'[-_]'), ' ')
+          .split(' ')
+          .map((word) {
+            if (word.isEmpty) return '';
+            // Handle common abbreviations
+            final lower = word.toLowerCase();
+            if (['vscode', 'vs', 'sql', 'mssql', 'github', 'remote', 'wsl'].contains(lower)) {
+              return word.toUpperCase();
+            }
+            return word[0].toUpperCase() + word.substring(1).toLowerCase();
+          })
+          .join(' ')
+          .trim();
+    }
+    
+    // Fallback: just return the ID with dots replaced by spaces
+    return extensionId.replaceAll('.', ' ');
   }
 }
