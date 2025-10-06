@@ -54,7 +54,7 @@ class _ExtensionsScreenState extends State<ExtensionsScreen> {
         backgroundColor: Colors.transparent,
         actions: [
           IconButton(
-            icon: Icon(_isCompactLayout ? Icons.view_module : Icons.view_list),
+            icon: Icon(_isCompactLayout ? Icons.view_list : Icons.view_module),
             tooltip: _isCompactLayout ? 'Regular View' : 'Compact View',
             onPressed: () {
               setState(() {
