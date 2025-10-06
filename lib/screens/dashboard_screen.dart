@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
 import '../models/models.dart';
 import '../services/services.dart';
+import '../widgets/widgets.dart';
 
 /// Dashboard Screen - Overview of all extension data with analytics
 class DashboardScreen extends StatefulWidget {
@@ -222,44 +223,16 @@ class _DashboardScreenState extends State<DashboardScreen> {
     
     return Row(
       children: [
-        Expanded(child: _buildStatCard('Total Extensions', extensionCount.toString(), Icons.extension, Colors.blue)),
+        Expanded(child: StatCard(title: 'Total Extensions', value: extensionCount.toString(), icon: Icons.extension, color: Colors.blue)),
         const SizedBox(width: 16),
-        Expanded(child: _buildStatCard('With Icons', extensionsWithIcons.toString(), Icons.image, Colors.green)),
+        Expanded(child: StatCard(title: 'With Icons', value: extensionsWithIcons.toString(), icon: Icons.image, color: Colors.green)),
         const SizedBox(width: 16),
-        Expanded(child: _buildStatCard('Publishers', publisherCount.toString(), Icons.business, Colors.orange)),
+        Expanded(child: StatCard(title: 'Publishers', value: publisherCount.toString(), icon: Icons.business, color: Colors.orange)),
       ],
     );
   }
 
-  Widget _buildStatCard(String title, String value, IconData icon, Color color) {
-    return Card(
-      elevation: 2,
-      child: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Column(
-          children: [
-            Icon(icon, size: 32, color: color),
-            const SizedBox(height: 12),
-            Text(
-              value,
-              style: const TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            const SizedBox(height: 4),
-            Text(
-              title,
-              style: TextStyle(
-                fontSize: 14,
-                color: Colors.grey[600],
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
+
 
   Widget _buildSmallExtensionIcon(VsCodeExtension extension) {
     if (extension.iconPath != null && extension.iconPath!.isNotEmpty) {
