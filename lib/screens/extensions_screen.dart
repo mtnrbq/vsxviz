@@ -162,7 +162,7 @@ class _ExtensionsScreenState extends State<ExtensionsScreen> {
                       child: GridView.builder(
                         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: _isCompactLayout ? 6 : 4,
-                          childAspectRatio: _isCompactLayout ? 1.0 : 1.2,
+                          childAspectRatio: _isCompactLayout ? 1.8 : 1.2,
                           crossAxisSpacing: _isCompactLayout ? 8 : 16,
                           mainAxisSpacing: _isCompactLayout ? 8 : 16,
                         ),
