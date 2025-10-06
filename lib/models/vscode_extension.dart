@@ -38,6 +38,12 @@ class VsCodeExtension {
   
   /// User rating from marketplace (if available)
   final double? rating;
+  
+  /// Local file path to the extension's icon (if available)
+  final String? iconPath;
+  
+  /// Remote URL to the extension's icon from marketplace (if available)
+  final String? iconUrl;
 
   const VsCodeExtension({
     required this.id,
@@ -53,6 +59,8 @@ class VsCodeExtension {
     this.repository,
     this.installCount,
     this.rating,
+    this.iconPath,
+    this.iconUrl,
   });
 
   /// Creates an extension from a map (useful for JSON/CSV parsing)
@@ -71,6 +79,8 @@ class VsCodeExtension {
       repository: map['repository'] as String?,
       installCount: _parseInt(map['installCount']),
       rating: _parseDouble(map['rating']),
+      iconPath: map['iconPath'] as String?,
+      iconUrl: map['iconUrl'] as String?,
     );
   }
 
@@ -90,6 +100,8 @@ class VsCodeExtension {
       'repository': repository,
       'installCount': installCount,
       'rating': rating,
+      'iconPath': iconPath,
+      'iconUrl': iconUrl,
     };
   }
 
@@ -108,6 +120,8 @@ class VsCodeExtension {
     String? repository,
     int? installCount,
     double? rating,
+    String? iconPath,
+    String? iconUrl,
   }) {
     return VsCodeExtension(
       id: id ?? this.id,
@@ -123,6 +137,8 @@ class VsCodeExtension {
       repository: repository ?? this.repository,
       installCount: installCount ?? this.installCount,
       rating: rating ?? this.rating,
+      iconPath: iconPath ?? this.iconPath,
+      iconUrl: iconUrl ?? this.iconUrl,
     );
   }
 
