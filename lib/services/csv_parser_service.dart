@@ -174,11 +174,19 @@ class CsvParserService {
           .split(' ')
           .map((word) {
             if (word.isEmpty) return '';
-            // Handle common abbreviations
+            // Handle specific abbreviations that should stay uppercase
             final lower = word.toLowerCase();
-            if (['vscode', 'vs', 'sql', 'mssql', 'github', 'remote', 'wsl'].contains(lower)) {
+            if (['vs', 'sql', 'mssql', 'wsl'].contains(lower)) {
               return word.toUpperCase();
             }
+            // Handle special cases with proper capitalization
+            if (lower == 'vscode') {
+              return 'VS Code';
+            }
+            if (lower == 'github') {
+              return 'GitHub';
+            }
+            // Default to title case
             return word[0].toUpperCase() + word.substring(1).toLowerCase();
           })
           .join(' ')
