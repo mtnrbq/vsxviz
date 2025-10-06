@@ -1,7 +1,7 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
 import '../models/models.dart';
 import '../services/services.dart';
+import '../widgets/widgets.dart';
 
 /// Extensions Screen - Browse and manage extensions
 class ExtensionsScreen extends StatefulWidget {
@@ -15,6 +15,7 @@ class _ExtensionsScreenState extends State<ExtensionsScreen> {
   List<VsCodeExtension>? _extensions;
   bool _isLoading = true;
   String? _error;
+  bool _isCompactLayout = false;
 
   @override
   void initState() {
@@ -52,6 +53,15 @@ class _ExtensionsScreenState extends State<ExtensionsScreen> {
         title: const Text('Extensions'),
         backgroundColor: Colors.transparent,
         actions: [
+          IconButton(
+            icon: Icon(_isCompactLayout ? Icons.view_module : Icons.view_list),
+            tooltip: _isCompactLayout ? 'Regular View' : 'Compact View',
+            onPressed: () {
+              setState(() {
+                _isCompactLayout = !_isCompactLayout;
+              });
+            },
+          ),
           IconButton(
             icon: const Icon(Icons.refresh),
             onPressed: _loadExtensions,
@@ -150,16 +160,19 @@ class _ExtensionsScreenState extends State<ExtensionsScreen> {
                     const SizedBox(height: 16),
                     Expanded(
                       child: GridView.builder(
-                        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 4,
-                          childAspectRatio: 1.2,
-                          crossAxisSpacing: 16,
-                          mainAxisSpacing: 16,
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: _isCompactLayout ? 6 : 4,
+                          childAspectRatio: _isCompactLayout ? 1.0 : 1.2,
+                          crossAxisSpacing: _isCompactLayout ? 8 : 16,
+                          mainAxisSpacing: _isCompactLayout ? 8 : 16,
                         ),
                         itemCount: _extensions!.length,
                         itemBuilder: (context, index) {
                           final extension = _extensions![index];
-                          return _ExtensionCard(extension: extension);
+                          return ExtensionCard(
+                            extension: extension,
+                            isCompact: _isCompactLayout,
+                          );
                         },
                       ),
                     ),
@@ -173,89 +186,3 @@ class _ExtensionsScreenState extends State<ExtensionsScreen> {
   }
 }
 
-class _ExtensionCard extends StatelessWidget {
-  final VsCodeExtension extension;
-
-  const _ExtensionCard({required this.extension});
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      elevation: 2,
-      child: Padding(
-        padding: const EdgeInsets.all(12.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            // Extension Icon
-            Container(
-              width: 48,
-              height: 48,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(8),
-                color: Colors.grey[200],
-              ),
-              child: _buildExtensionIcon(),
-            ),
-            const SizedBox(height: 8),
-            // Extension Name
-            Text(
-              extension.displayName,
-              style: const TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.bold,
-              ),
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-              textAlign: TextAlign.center,
-            ),
-            const SizedBox(height: 4),
-            // Publisher
-            Text(
-              extension.publisher,
-              style: TextStyle(
-                fontSize: 12,
-                color: Colors.grey[600],
-              ),
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              textAlign: TextAlign.center,
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildExtensionIcon() {
-    if (extension.iconPath != null && extension.iconPath!.isNotEmpty) {
-      final iconFile = File(extension.iconPath!);
-      return ClipRRect(
-        borderRadius: BorderRadius.circular(8),
-        child: Image.file(
-          iconFile,
-          fit: BoxFit.cover,
-          errorBuilder: (context, error, stackTrace) {
-            return _buildFallbackIcon();
-          },
-        ),
-      );
-    }
-    
-    return _buildFallbackIcon();
-  }
-
-  Widget _buildFallbackIcon() {
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(8),
-        color: const Color(0xFF007ACC),
-      ),
-      child: const Icon(
-        Icons.extension,
-        color: Colors.white,
-        size: 24,
-      ),
-    );
-  }
-}
