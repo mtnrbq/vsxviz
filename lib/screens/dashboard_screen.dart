@@ -234,37 +234,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
 
 
-  Widget _buildSmallExtensionIcon(VsCodeExtension extension) {
-    if (extension.iconPath != null && extension.iconPath!.isNotEmpty) {
-      final iconFile = File(extension.iconPath!);
-      return ClipRRect(
-        borderRadius: BorderRadius.circular(6),
-        child: Image.file(
-          iconFile,
-          fit: BoxFit.cover,
-          errorBuilder: (context, error, stackTrace) {
-            return _buildSmallFallbackIcon();
-          },
-        ),
-      );
-    }
-    
-    return _buildSmallFallbackIcon();
-  }
 
-  Widget _buildSmallFallbackIcon() {
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(6),
-        color: const Color(0xFF007ACC),
-      ),
-      child: const Icon(
-        Icons.extension,
-        color: Colors.white,
-        size: 16,
-      ),
-    );
-  }
 
   Color _getExtensionColorByPercentage(double percentage) {
     if (percentage >= 0.8) return Colors.green.shade600;    // 80%+ - Dark green
@@ -378,10 +348,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     ),
                   ),
                   const SizedBox(width: 8),
-                  SizedBox(
-                    width: 32,
-                    height: 32,
-                    child: _buildSmallExtensionIcon(extension),
+                  ExtensionIcon(
+                    extension: extension,
+                    size: 32,
                   ),
                   const SizedBox(width: 12),
                   Expanded(
