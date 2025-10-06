@@ -35,6 +35,8 @@ void main() {
         repository: 'https://github.com/microsoft/vscode-python',
         installCount: 50000000,
         rating: 4.5,
+        iconPath: '/path/to/icon.png',
+        iconUrl: 'https://example.com/icon.png',
       );
 
       expect(extension.description, equals('Python language support'));
@@ -44,6 +46,8 @@ void main() {
       expect(extension.repository, equals('https://github.com/microsoft/vscode-python'));
       expect(extension.installCount, equals(50000000));
       expect(extension.rating, equals(4.5));
+      expect(extension.iconPath, equals('/path/to/icon.png'));
+      expect(extension.iconUrl, equals('https://example.com/icon.png'));
     });
 
     test('creates extension from map with various field names', () {
@@ -61,6 +65,8 @@ void main() {
         'repository': 'https://github.com/microsoft/vscode-python',
         'installCount': '50000000',
         'rating': '4.5',
+        'iconPath': '/home/user/.vscode/extensions/ms-python.python-2023.20.0/icon.png',
+        'iconUrl': 'https://ms-python.gallerycdn.vsassets.io/extensions/ms-python/python/2023.20.0/icon.png',
       };
 
       final extension = VsCodeExtension.fromMap(map);
@@ -78,6 +84,8 @@ void main() {
       expect(extension.repository, equals('https://github.com/microsoft/vscode-python'));
       expect(extension.installCount, equals(50000000));
       expect(extension.rating, equals(4.5));
+      expect(extension.iconPath, equals('/home/user/.vscode/extensions/ms-python.python-2023.20.0/icon.png'));
+      expect(extension.iconUrl, equals('https://ms-python.gallerycdn.vsassets.io/extensions/ms-python/python/2023.20.0/icon.png'));
     });
 
     test('handles missing or null values in fromMap', () {
@@ -100,6 +108,8 @@ void main() {
       expect(extension.repository, isNull);
       expect(extension.installCount, isNull);
       expect(extension.rating, isNull);
+      expect(extension.iconPath, isNull);
+      expect(extension.iconUrl, isNull);
     });
 
     test('converts to map correctly', () {
@@ -118,6 +128,8 @@ void main() {
         repository: 'https://github.com/microsoft/vscode-python',
         installCount: 50000000,
         rating: 4.5,
+        iconPath: '/path/to/icon.png',
+        iconUrl: 'https://example.com/icon.png',
       );
 
       final map = extension.toMap();
@@ -135,6 +147,8 @@ void main() {
       expect(map['repository'], equals('https://github.com/microsoft/vscode-python'));
       expect(map['installCount'], equals(50000000));
       expect(map['rating'], equals(4.5));
+      expect(map['iconPath'], equals('/path/to/icon.png'));
+      expect(map['iconUrl'], equals('https://example.com/icon.png'));
     });
 
     test('copyWith creates new instance with modified values', () {
