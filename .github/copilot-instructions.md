@@ -64,13 +64,14 @@ flutter analyze
 5. Export functionality for analysis results
 
 ## Git Conventions
-- Prefer minimal but sufficient commit messages
+- **Succinct commit messages**: Keep commit messages brief and clear (e.g., "Add CSV parsing service", "Update navigation UI")
+- **Succinct PR messages**: Title and description should be concise but complete
 - Recent commits: Foundation → Models → Package upgrades
 
 ## Agent Mode Workflow
-When working in agent mode you MUST create a new branch for the work from main BEFORE starting on any change session, where a change session is a set of changes and interactions designed to effect a feature or similar. When it is indicated that we're done, e.g. 'lets button this up', or 'we're done' or similar, prepare a commit with a minimal but sufficient message, commit the change to the working branch, then make a PR to merge it to main, once it has been merged to main, offer to remove the old branch
+When working in agent mode you MUST create a new branch for the work from main BEFORE starting on any change session, where a change session is a set of changes and interactions designed to effect a feature or similar. When it is indicated that we're done, e.g. 'lets button this up', or 'we're done' or similar, prepare a commit with a succinct message, commit the change to the working branch, then make a PR to merge it to main, once it has been merged to main, offer to remove the old branch
 
-**IMPORTANT**: The main branch is protected and requires Pull Requests for all changes. Direct pushes to main are NOT allowed. Always work on feature branches and create PRs for review and merging.
+**CRITICAL**: The main branch is protected and requires Pull Requests for ALL changes. Direct pushes to main are NEVER allowed. Force pushes are prohibited. Always work on feature branches and create PRs for review and merging.
 
 ## Coding Conventions
 - Use Dart/Flutter best practices with const constructors where possible
